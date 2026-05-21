@@ -4,7 +4,7 @@ function MenuCard({ item }) {
     return (
         <div className="menu-card">
             <img 
-            src="https://images.unsplash.com/photo-1563379091339-03246963d51a" 
+            src="/biryani.webp" 
             alt={item.name} 
             />
 
