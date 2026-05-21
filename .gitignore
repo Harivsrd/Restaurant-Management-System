@@ -19,6 +19,13 @@ staticfiles/
 .vscode/
 .idea/
 
+venv/
+**pycache**/
+*.pyc
+db.sqlite3
+.env
+
+
 # OS files
 .DS_Store
 Thumbs.db
