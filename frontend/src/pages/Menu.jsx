@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import API from "../services/api";
 import "../styles/menu.css";
+import MenuCard from "../components/MenuCard";
 
 function Menu() {
 
@@ -28,11 +29,7 @@ function Menu() {
 
             <div className="menu-grid">
                 {menuItems.map((item) => (
-                    <div className="menu-card" key={item.id}>
-                        <h2>{item.name}</h2>
-                        <p>{item.description}</p>
-                        <h3>₹{item.price}</h3>
-                    </div>
+                    <MenuCard key={item.id} item={item} />
                 ))}
             </div>
         </div>
