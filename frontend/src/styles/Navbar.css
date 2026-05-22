@@ -23,3 +23,12 @@
 .nav-links a:hover {
   color: orange;
 }
+
+.navbar button {
+  background-color: orange;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  color: white;
+}

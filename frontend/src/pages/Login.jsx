@@ -29,6 +29,7 @@ function Login() {
 
             alert("Login Successful");
             console.log(response.data);
+            window.location.href = "/";
         }
         catch(error){
             console.log(error);
