@@ -1,4 +1,5 @@
 import "../styles/cart.css";
+import { Link } from "react-router-dom";
 
 function Cart({ cartItems, setCartItems }) {
 
@@ -99,6 +100,12 @@ function Cart({ cartItems, setCartItems }) {
             <h2 className="total">
               Total: ₹{totalPrice}
             </h2>
+
+            <Link to="/checkout">
+                <button>
+                    Proceed to Checkout
+                </button>
+            </Link>
 
           </>
         )
