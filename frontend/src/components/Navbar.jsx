@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import "../styles/navbar.css";
 
-function Navbar() {
+function Navbar({ cartItems }) {
 
     const token = localStorage.getItem("token");
 
@@ -19,6 +19,7 @@ function Navbar() {
             <div className="nav-links">
                 <Link to="/">Home</Link>
                 <Link to="/menu">Menu</Link>
+                <Link to="/cart">Cart ({cartItems.length})</Link>
                 <Link to="/about">About</Link>
                 {
                     token ? (

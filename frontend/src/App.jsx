@@ -11,6 +11,7 @@ import About from "./pages/About";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
+import Cart from "./pages/Cart";
 
 function App() {
 
@@ -18,7 +19,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Navbar />
+      <Navbar cartItems={cartItems} />
 
       <Routes>
         <Route path="/register" element={<Register />} />
@@ -30,6 +31,7 @@ function App() {
         />
         <Route path="/about" element={<About />} />
         <Route path="/dashboard" element={<ProtectedRoute> <Dashboard /> </ProtectedRoute>} />
+        <Route path="/cart" element={<Cart cartItems={cartItems} setCartItems={setCartItems} /> } />
       </Routes> 
 
     </BrowserRouter>
