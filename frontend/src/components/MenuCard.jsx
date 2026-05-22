@@ -1,6 +1,6 @@
 import "../styles/menucard.css";
 
-function MenuCard({ item }) {
+function MenuCard({ item, addToCart }) {
     return (
         <div className="menu-card">
             <img 
@@ -12,7 +12,7 @@ function MenuCard({ item }) {
             <p>{item.description}</p>
             <h3>₹{item.price}</h3>
 
-            <button>Add to Cart</button>
+            <button onClick={() => addToCart(item)}>Add to Cart</button>
         </div>
     );
 }

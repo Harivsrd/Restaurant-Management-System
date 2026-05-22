@@ -3,7 +3,7 @@ import API from "../services/api";
 import "../styles/menu.css";
 import MenuCard from "../components/MenuCard";
 
-function Menu() {
+function Menu({ cartItems, setCartItems }) {
 
     const [menuItems, setMenuItems] = useState([]);
     
@@ -22,6 +22,10 @@ function Menu() {
         fetchMenu();
     }, []);
 
+    const addToCart = (item) => {
+        setCartItems([...cartItems, item]);
+    }
+
 
     return (
         <div className="menu-container">
@@ -29,7 +33,7 @@ function Menu() {
 
             <div className="menu-grid">
                 {menuItems.map((item) => (
-                    <MenuCard key={item.id} item={item} />
+                    <MenuCard key={item.id} item={item} addToCart={addToCart} />
                 ))}
             </div>
         </div>
