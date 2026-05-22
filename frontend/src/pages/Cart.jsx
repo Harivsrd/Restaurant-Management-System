@@ -1,32 +1,111 @@
-function Cart({ cartItems, setCartItems }){
-    const removeItem = (index) => {
-        const updatedCart = [...cartItems];
+import "../styles/cart.css";
 
-        updatedCart.splice(index , 1);
+function Cart({ cartItems, setCartItems }) {
 
-        setCartItems(updatedCart);
-    }
+  const increaseQuantity = (id) => {
 
-    return (
-        <div>
-            <h1>Your Cart</h1>
+    const updatedCart = cartItems.map((item) =>
+
+      item.id === id
+        ? { ...item, quantity: item.quantity + 1 }
+        : item
+    );
+
+    setCartItems(updatedCart);
+
+  };
+
+  const decreaseQuantity = (id) => {
+
+    const updatedCart = cartItems
+      .map((item) =>
+
+        item.id === id
+          ? { ...item, quantity: item.quantity - 1 }
+          : item
+      )
+      .filter((item) => item.quantity > 0);
+
+    setCartItems(updatedCart);
+
+  };
+
+  const totalPrice = cartItems.reduce(
+
+    (total, item) =>
+      total + item.price * item.quantity,
+
+    0
+  );
+
+  return (
+
+    <div className="cart-container">
+
+      <h1>Your Cart</h1>
+
+      {
+
+        cartItems.length === 0 ? (
+
+          <p>Cart is empty</p>
+
+        ) : (
+
+          <>
             {
-                cartItems.length === 0 ? (
-                    <p>Cart is empty</p>
-                ) : (
-                    cartItems.map((item, index) => (
-                        <div key={index}>
-                            <h2>{item.name}</h2>
-                            <p>₹{item.price}</p>
-                            <button onClick={() => removeItem(index)}>
-                                Remove
-                            </button>
-                        </div>   
-                    ))
-                )
+
+              cartItems.map((item) => (
+
+                <div
+                  className="cart-item"
+                  key={item.id}
+                >
+
+                  <div>
+
+                    <h2>{item.name}</h2>
+
+                    <p>₹{item.price}</p>
+
+                  </div>
+
+                  <div className="quantity-controls">
+
+                    <button
+                      onClick={() =>
+                        decreaseQuantity(item.id)
+                      }
+                    >
+                      -
+                    </button>
+
+                    <span>{item.quantity}</span>
+
+                    <button
+                      onClick={() =>
+                        increaseQuantity(item.id)
+                      }
+                    >
+                      +
+                    </button>
+
+                  </div>
+
+                </div>
+              ))
             }
-        </div>
-    )
+
+            <h2 className="total">
+              Total: ₹{totalPrice}
+            </h2>
+
+          </>
+        )
+      }
+
+    </div>
+  );
 }
 
 export default Cart;
