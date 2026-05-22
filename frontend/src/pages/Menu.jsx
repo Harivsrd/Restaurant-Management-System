@@ -23,7 +23,24 @@ function Menu({ cartItems, setCartItems }) {
     }, []);
 
     const addToCart = (item) => {
-        setCartItems([...cartItems, item]);
+        const existingItem = cartItems.find(
+            (cartItem) => cartItem.id === item.id
+        );
+
+        if(existingItem) {
+            const updatedCart = cartItems.map((cartItem)=> 
+                cartItem.id === item.id 
+                    ? {...cartItem, quantity: cartItem.quantity + 1}
+                    : cartItem
+            );
+
+            setCartItems(updatedCart);
+        }
+        else {
+            setCartItems([
+                ...cartItems, {...item, quantity: 1}
+            ]);
+        }
     }
 
 
