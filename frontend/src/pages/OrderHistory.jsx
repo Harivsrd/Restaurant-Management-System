@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import API from "../services/api";
-import "../styles/orderhistory.css";
+import "../styles/orderhistory.css"
 
 function OrderHistory() {
 

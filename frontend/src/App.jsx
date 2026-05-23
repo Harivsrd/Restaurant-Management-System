@@ -14,6 +14,7 @@ import Dashboard from "./pages/Dashboard";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import OrderHistory from "./pages/OrderHistory";
+import Reservations from "./pages/Reservations";
 
 function App() {
 
@@ -36,6 +37,7 @@ function App() {
         <Route path="/cart" element={<Cart cartItems={cartItems} setCartItems={setCartItems} /> } />
         <Route path="/checkout" element={<Checkout cartItems={cartItems} setCartItems={setCartItems} />} />
         <Route path="/orders" element={<ProtectedRoute><OrderHistory /></ProtectedRoute>} />
+        <Route path="/reservations" element={<ProtectedRoute><Reservations /></ProtectedRoute>} />
       </Routes> 
 
     </BrowserRouter>
