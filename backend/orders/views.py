@@ -41,7 +41,7 @@ def dashboard_stats(request):
     total_reservations = (Reservation.objects.count())
     total_users = User.objects.count()
     total_revenue = (
-        Order.objects.aggregate(Sum('total_price'))['total_price_sum'] or 0
+        Order.objects.aggregate(Sum('total_price'))['total_price__sum'] or 0
     )
     data = {
         "total_orders": total_orders,
