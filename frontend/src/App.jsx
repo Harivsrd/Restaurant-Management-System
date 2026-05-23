@@ -15,6 +15,7 @@ import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import OrderHistory from "./pages/OrderHistory";
 import Reservations from "./pages/Reservations";
+import ReservationHistory from "./pages/ReservationHistory";
 
 function App() {
 
@@ -38,6 +39,7 @@ function App() {
         <Route path="/checkout" element={<Checkout cartItems={cartItems} setCartItems={setCartItems} />} />
         <Route path="/orders" element={<ProtectedRoute><OrderHistory /></ProtectedRoute>} />
         <Route path="/reservations" element={<ProtectedRoute><Reservations /></ProtectedRoute>} />
+        <Route path="/reservation-history" element={<ProtectedRoute><ReservationHistory /></ProtectedRoute>} />
       </Routes> 
 
     </BrowserRouter>

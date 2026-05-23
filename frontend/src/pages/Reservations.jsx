@@ -19,6 +19,12 @@ function Reservations() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (formData.guests <= 0) {
+            alert("Guests must be greater than 0");
+            return;
+        }
+
         try {
             await API.post("reservations/create/",formData);
         }
