@@ -14,6 +14,11 @@ function Checkout({ cartItems, setCartItems }) {
 
     try {
 
+      if (totalPrice <= 0 ){
+        alert("Check the cart, the cart is empty!");
+        return;
+      }
+
       const response = await API.post(
         "orders/create/",
         {
