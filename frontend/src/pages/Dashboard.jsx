@@ -12,7 +12,7 @@ function Dashboard() {
 
     const fetchDashboardStats = async () => {
         try {
-            const response = await API.get("orders.dashboard/");
+            const response = await API.get("orders/dashboard/");
 
             setStats(response.data);
         }
