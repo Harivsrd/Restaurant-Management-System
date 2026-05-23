@@ -4,7 +4,7 @@ function MenuCard({ item, addToCart }) {
     return (
         <div className="menu-card">
             <img 
-            src="/biryani.webp" 
+            src={`http://127.0.0.1:8000${item.image}`}
             alt={item.name} 
             />
 
