@@ -1,6 +1,9 @@
 from rest_framework.decorators import api_view
-
 from rest_framework.response import Response
+
+from django.db.models import Sum 
+
+from reservations.models import Reservation
 
 from .models import Order 
 
@@ -31,3 +34,20 @@ def order_history(request):
     )
     
     return Response(serializer.data)
+
+@api_view(['GET'])
+def dashboard_stats(request):
+    total_orders = Order.objects.count()
+    total_reservations = (Reservation.objects.count())
+    total_users = User.objects.count()
+    total_revenue = (
+        Order.objects.aggregate(Sum('total_price'))['total_price_sum'] or 0
+    )
+    data = {
+        "total_orders": total_orders,
+        "total_reservations": total_reservations,
+        "total_users": total_users,
+        "total_revenue": total_revenue
+    }
+    
+    return Response(data)
