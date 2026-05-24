@@ -3,6 +3,8 @@ import { useState } from "react";
 import API from "../services/api";
 
 function Reservations() {
+
+    const [loading, setLoading] = useState(false);
     
     const [formData, setFormData] = useState({
         reservation_date: "",
@@ -26,10 +28,15 @@ function Reservations() {
         }
 
         try {
+            setLoading(true);
             await API.post("reservations/create/",formData);
+            alert("Reservation Successful");
         }
         catch(error) {
-            console.log(error);
+            alert("Reservation Failed");
+        }
+        finally {
+            setLoading(false);
         }
     };
 
@@ -41,7 +48,11 @@ function Reservations() {
                     <input type="time" name="reservation_time" onChange={handleChange} />
                     <input type="number" name="guests" onChange={handleChange} />
 
-                    <button type="submit">Reserve Table</button>
+                    <button type="submit" disabled={loading}>
+                        {
+                            loading ? "Booking..." : "Reserve Table"
+                        }
+                    </button>
             </form>
         </div>
     )

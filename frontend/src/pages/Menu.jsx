@@ -67,13 +67,11 @@ function Menu({ cartItems, setCartItems }) {
         }
     }
 
-    if(error) {
-        return <h1>{error}</h1>
-    }
+    if (loading) return <h1>Loading menu...</h1>
 
-    if (loading) {
-        return <h1>Loading menu...</h1>
-    }
+    if(error) return <h1>{error}</h1>;
+
+
 
     return (
         <div className="menu-container">

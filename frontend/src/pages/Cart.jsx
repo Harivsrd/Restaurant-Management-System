@@ -49,7 +49,13 @@ function Cart({ cartItems, setCartItems }) {
 
         cartItems.length === 0 ? (
 
-          <p>Cart is empty</p>
+          <div className="empty-cart">
+            <h2>Your Cart is Empty</h2>
+            <p>
+              Add delicious food items 
+              to your cart.
+            </p>
+          </div>
 
         ) : (
 
