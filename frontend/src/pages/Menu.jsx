@@ -5,6 +5,10 @@ import MenuCard from "../components/MenuCard";
 
 function Menu({ cartItems, setCartItems }) {
 
+    const [loading, setLoading] = useState(true);
+
+    const [error, setError] = useState("");
+
     const [menuItems, setMenuItems] = useState([]);
     
     const [searchTerm, setSearchTerm] = useState("");
@@ -13,12 +17,17 @@ function Menu({ cartItems, setCartItems }) {
 
     const fetchMenu = async () => {
         try {
+            setLoading(true);
             const response = await API.get("menu/");
             setMenuItems(response.data);
-            console.log(response.data);
+            setError("");
         }
         catch(error){
             console.log(error);
+            setError("Failed to load menu items");
+        }
+        finally {
+            setLoading(false);
         }
     };
 
@@ -58,6 +67,13 @@ function Menu({ cartItems, setCartItems }) {
         }
     }
 
+    if(error) {
+        return <h1>{error}</h1>
+    }
+
+    if (loading) {
+        return <h1>Loading menu...</h1>
+    }
 
     return (
         <div className="menu-container">
@@ -81,9 +97,21 @@ function Menu({ cartItems, setCartItems }) {
             <h1>Restaurant Menu</h1>
 
             <div className="menu-grid">
-                {filteredItems.map((item) => (
-                    <MenuCard key={item.id} item={item} addToCart={addToCart} />
-                ))}
+                {filteredItems.length === 0 ? (
+
+                <h2>No food items found</h2>
+
+                ) : (
+
+                filteredItems.map((item) => (
+
+                    <MenuCard
+                    key={item.id}
+                    item={item}
+                    addToCart={addToCart}
+                    />
+                ))
+                )}
             </div>
         </div>
     )
