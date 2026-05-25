@@ -11,7 +11,7 @@ API.interceptors.request.use(
   (config) => {
 
     const token =
-      localStorage.getItem("token");
+      localStorage.getItem("access");
 
     if (token) {
 
@@ -20,6 +20,28 @@ API.interceptors.request.use(
     }
 
     return config;
+  }
+);
+
+API.interceptors.response.use(
+
+  (response) => response,
+
+  (error) => {
+
+    if (
+      error.response &&
+      error.response.status === 401
+    ) {
+
+      localStorage.removeItem("access");
+
+      localStorage.removeItem("refresh");
+
+      window.location.href = "/login";
+    }
+
+    return Promise.reject(error);
   }
 );
 

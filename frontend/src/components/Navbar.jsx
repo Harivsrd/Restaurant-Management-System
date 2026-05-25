@@ -7,7 +7,10 @@ function Navbar({ cartItems }) {
 
     const handleLogout = () => {
         
-        localStorage.removeItem("token");
+        localStorage.removeItem("access");
+
+        localStorage.removeItem("refresh");
+        
         window.location.href = "/login";
 
     }
@@ -19,6 +22,7 @@ function Navbar({ cartItems }) {
             <div className="nav-links">
                 <Link to="/">Home</Link>
                 <Link to="/menu">Menu</Link>
+                <Link to="/favorites">Favorites</Link>
                 <Link to="/about">About</Link>
                 {
                     token ? (

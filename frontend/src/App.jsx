@@ -17,6 +17,7 @@ import OrderHistory from "./pages/OrderHistory";
 import Reservations from "./pages/Reservations";
 import ReservationHistory from "./pages/ReservationHistory";
 import Profile from "./pages/Profile";
+import Favorites from "./pages/Favorites";
 
 function App() {
 
@@ -42,6 +43,7 @@ function App() {
         <Route path="/reservations" element={<ProtectedRoute><Reservations /></ProtectedRoute>} />
         <Route path="/reservation-history" element={<ProtectedRoute><ReservationHistory /></ProtectedRoute>} />
         <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+        <Route path="/favorites" element={<ProtectedRoute><Favorites /></ProtectedRoute>} />
       </Routes> 
 
     </BrowserRouter>

@@ -26,8 +26,10 @@ function Login() {
                 formData
             );
             
-            localStorage.setItem("token", response.data.access);
+            localStorage.setItem("access",response.data.access);
 
+            localStorage.setItem("refresh",response.data.refresh);
+            
             toast.success("Login Successful");
             console.log(response.data);
             // window.location.href = "/";
