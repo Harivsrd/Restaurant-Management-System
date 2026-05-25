@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 import API from "../services/api";
 
@@ -27,13 +28,13 @@ function Login() {
             
             localStorage.setItem("token", response.data.access);
 
-            alert("Login Successful");
+            toast.success("Login Successful");
             console.log(response.data);
-            window.location.href = "/";
+            // window.location.href = "/";
         }
         catch(error){
             console.log(error);
-            alert("Invalid Credentials");
+            toast.error("Invalid Credentials");
         }
     }
 

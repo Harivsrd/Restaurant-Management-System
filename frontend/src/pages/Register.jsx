@@ -1,5 +1,6 @@
 import { useState } from "react";
 import API from "../services/api";
+import { toast } from "react-toastify";
 
 function Register() {
 
@@ -25,11 +26,11 @@ function Register() {
                 formData
             );
             console.log(response.data);
-            alert("Registration Successful");
+            toast.success("Registration Successful");
             window.location.href = "/login";
         }
         catch(error){
-            console.log(error);
+            toast.error(error);
         }
     }
 

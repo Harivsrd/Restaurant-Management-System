@@ -7,7 +7,7 @@ import App from './App.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <ToastContainer />
+    <ToastContainer position="top-right" autoClose={3000} />
     <App />
   </StrictMode>,
 )

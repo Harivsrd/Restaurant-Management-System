@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import { toast } from "react-toastify";
 import API from "../services/api";
 
 function Reservations() {
@@ -23,17 +23,17 @@ function Reservations() {
         e.preventDefault();
 
         if (formData.guests <= 0) {
-            alert("Guests must be greater than 0");
+            toast.error("Guests must be greater than 0");
             return;
         }
 
         try {
             setLoading(true);
             await API.post("reservations/create/",formData);
-            alert("Reservation Successful");
+            toast.success("Reservation Successful");
         }
         catch(error) {
-            alert("Reservation Failed");
+            toast.error("Reservation Failed");
         }
         finally {
             setLoading(false);

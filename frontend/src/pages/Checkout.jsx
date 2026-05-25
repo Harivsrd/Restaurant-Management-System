@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import API from "../services/api";
 
 function Checkout({ cartItems, setCartItems }) {
@@ -15,7 +16,7 @@ function Checkout({ cartItems, setCartItems }) {
     try {
 
       if (totalPrice <= 0 ){
-        alert("Check the cart, the cart is empty!");
+        toast.error("Check the cart, the cart is empty!");
         return;
       }
       
@@ -28,7 +29,7 @@ function Checkout({ cartItems, setCartItems }) {
 
       console.log(response.data);
 
-      alert("Order Placed Successfully");
+      toast.success("Order Placed Successfully");
 
       setCartItems([]);
 
