@@ -16,6 +16,7 @@ import Checkout from "./pages/Checkout";
 import OrderHistory from "./pages/OrderHistory";
 import Reservations from "./pages/Reservations";
 import ReservationHistory from "./pages/ReservationHistory";
+import Profile from "./pages/Profile";
 
 function App() {
 
@@ -40,6 +41,7 @@ function App() {
         <Route path="/orders" element={<ProtectedRoute><OrderHistory /></ProtectedRoute>} />
         <Route path="/reservations" element={<ProtectedRoute><Reservations /></ProtectedRoute>} />
         <Route path="/reservation-history" element={<ProtectedRoute><ReservationHistory /></ProtectedRoute>} />
+        <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
       </Routes> 
 
     </BrowserRouter>

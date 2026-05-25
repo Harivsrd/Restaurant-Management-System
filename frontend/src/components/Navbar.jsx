@@ -19,15 +19,16 @@ function Navbar({ cartItems }) {
             <div className="nav-links">
                 <Link to="/">Home</Link>
                 <Link to="/menu">Menu</Link>
-                <Link to="/cart">Cart ({cartItems.length})</Link>
-                <Link to="/orders"> Orders </Link>
-                <Link to="/reservations">Reservations</Link>
-                <Link to="/reservation-history">Reservation History</Link>
                 <Link to="/about">About</Link>
                 {
                     token ? (
                         <>
+                            <Link to="/cart">Cart ({cartItems.length})</Link>
+                            <Link to="/orders"> Orders </Link>
+                            <Link to="/reservations">Reservations</Link>
+                            <Link to="/reservation-history">Reservation History</Link>
                             <Link to="/dashboard">Dashboard</Link>
+                            <Link to="/profile">Profile</Link>
                             <button onClick={handleLogout}> Logout </button>
                         </>
                     ) : (
