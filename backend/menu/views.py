@@ -17,31 +17,49 @@ def menu_list(request):
     return paginator.get_paginated_response(serializer.data)
 
 @api_view(['POST'])
+
 @permission_classes([IsAuthenticated])
 
 def toggle_favorite(request, item_id):
+
     user = request.user
-    item = MenuItem.objects.get(id=item_id)
+
+    item = MenuItem.objects.get(
+        id=item_id
+    )
+
     if user in item.favorites.all():
+
         item.favorites.remove(user)
-        
+
         return Response({
-            "message": "Removed from favorites"
+            "message":
+            "Removed from favorites"
         })
+
     else:
+
         item.favorites.add(user)
-        
+
         return Response({
-            "message": "Added to favorites"
+            "message":
+            "Added to favorites"
         })
         
         
 @api_view(['GET'])
+
 @permission_classes([IsAuthenticated])
 
 def favorite_items(request):
-    user = request.user 
-    items = user.favorite_item.all()
-    serializer = MenuItemSerializer(items, many=True)
-    
+
+    user = request.user
+
+    items = user.favorite_items.all()
+
+    serializer = MenuItemSerializer(
+        items,
+        many=True
+    )
+
     return Response(serializer.data)

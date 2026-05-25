@@ -3,6 +3,6 @@ from .views import (menu_list , toggle_favorite , favorite_items )
 
 urlpatterns = [
     path('', menu_list),
-    path('favorites/', favorite_items),
-    path('favorites/<int:item_id>/',toggle_favorite),
+    path('favorites/',favorite_items),
+    path('favorite/<int:item_id>/',toggle_favorite),
 ]
