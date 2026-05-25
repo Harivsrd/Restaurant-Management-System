@@ -15,11 +15,20 @@ function Menu({ cartItems, setCartItems }) {
 
     const [selectedCategory, setSelectedCategory] = useState("All");
 
-    const fetchMenu = async () => {
+    const [nextPage, setNextPage] = useState(null);
+
+    const [previousPage, setPreviousPage] = useState(null);
+
+    const [currentPage, setCurrentPage] = useState(1);
+    
+    const fetchMenu = async ( page = 1) => {
         try {
             setLoading(true);
-            const response = await API.get("menu/");
-            setMenuItems(response.data);
+            const response = await API.get(`menu/?page=${page}`);
+            setMenuItems(response.data.results);
+            setNextPage(response.data.next);
+            setPreviousPage(response.data.previous);
+            setCurrentPage(page);
             setError("");
         }
         catch(error){
@@ -111,6 +120,19 @@ function Menu({ cartItems, setCartItems }) {
                 ))
                 )}
             </div>
+
+            <div className="pagination">
+                <button disabled={!previousPage} onClick={() => fetchMenu(currentPage - 1 )}>
+                    Previous
+                </button>
+                <span>
+                    Page {currentPage}
+                </span>
+                <button disabled={!nextPage} onClick={() => fetchMenu(currentPage+1)} >
+                    Next
+                </button>
+            </div>
+
         </div>
     )
 }
