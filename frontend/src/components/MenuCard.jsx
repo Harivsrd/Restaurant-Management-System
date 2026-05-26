@@ -5,15 +5,17 @@ import { toast } from "react-toastify";
 function MenuCard({ item, addToCart }) {
 
     const handleFavorite = async () => {
-        try {
 
-            const response = await API.post(`menu/favorite/${item.id}/`);
+    try {
 
-            toast.success(response.data.message);
+        const response = await API.post(`menu/favorite/${item.id}/`);
 
-        } catch(error) {
-            toast.error("Login required");
-        }
+        toast.success(response.data.message);
+    } catch (error) {
+
+        toast.error("Login required");
+
+    }
     };
 
     return (
