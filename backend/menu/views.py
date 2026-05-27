@@ -6,6 +6,9 @@ from rest_framework.permissions import IsAuthenticated
 from .models import MenuItem
 from .serializer import MenuItemSerializer
 
+from .models import Review
+from .serializer import (ReviewSerializer)
+
 #menu list api 
 @api_view(['GET'])
 def menu_list(request):
@@ -63,3 +66,4 @@ def favorite_items(request):
     )
 
     return Response(serializer.data)
+
