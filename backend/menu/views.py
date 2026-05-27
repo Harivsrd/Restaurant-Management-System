@@ -3,6 +3,8 @@ from rest_framework.decorators import ( api_view , permission_classes )
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
 
+from django.db.models import Avg, Count
+
 from .models import MenuItem
 from .serializer import MenuItemSerializer
 
@@ -69,7 +71,6 @@ def favorite_items(request):
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
-
 def add_review(request, item_id):
     item = MenuItem.objects.get(id=item_id)
     review = Review.objects.create(
@@ -87,5 +88,25 @@ def get_review(request, item_id):
     item = MenuItem.objects.get(id=item_id)
     reviews = item.reviews.all()
     serializer = ReviewSerializer(reviews, many=True)
+    
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def rating_stats(request, item_id):
+    item = MenuItem.objects.get(id=item_id)
+    stats = item.reviews.aggregate(
+        average_rating = Avg('rating'),
+        total_reviews = Count('id')
+    )
+    
+    return Response(stats)
+
+@api_view(["GET"])
+def popular_items(request):
+    items = MenuItem.objects.annotate(
+        average_rating = Avg("reviews__rating"),
+        review_count = Count('reviews')
+    ).order_by('-average_rating')[:5]
+    serializer = MenuItemSerializer(items, many=True)
     
     return Response(serializer.data)
