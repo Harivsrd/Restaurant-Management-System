@@ -23,6 +23,7 @@ function Navbar({ cartItems }) {
                 <Link to="/">Home</Link>
                 <Link to="/menu">Menu</Link>
                 <Link to="/favorites">Favorites</Link>
+                <Link to="/popular">Popular Foods</Link>
                 <Link to="/about">About</Link>
                 {
                     token ? (

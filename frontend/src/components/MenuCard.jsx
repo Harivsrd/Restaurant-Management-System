@@ -11,8 +11,11 @@ function MenuCard({ item, addToCart }) {
 
     const [reviews, setReviews] = useState([]);
 
+    const [stats, setStats] = useState({});
+    
     useEffect(() => {
         fetchReviews();
+        fetchRatingStats();
     },[])
 
     const handleFavorite = async () => {
@@ -49,6 +52,22 @@ function MenuCard({ item, addToCart }) {
         }
     };
 
+    const fetchRatingStats = async () => {
+        try {
+            const response = await API.get(`menu/rating-stats/${item.id}/`);
+            setStats(response.data);
+        }
+        catch(error) {
+            console.log(error);
+        }
+    };
+
+    const renderStars = (rating) => {
+        const rounded = Math.round(rating);
+
+        return "⭐".repeat(rounded);
+    };
+
 
     return (
         <div className="menu-card">
@@ -63,6 +82,22 @@ function MenuCard({ item, addToCart }) {
             <button onClick={handleFavorite}>
             ❤️ Favorite
             </button>
+            <div className="rating-stats">
+                <h3>{
+                stats.average_rating
+                ?
+                renderStars(
+                    stats.average_rating
+                )
+                :
+                "No Ratings"
+                }</h3>
+                <p>
+                    {stats.total_reviews || 0}
+                    {" "}
+                    Reviews
+                </p>
+            </div>
             <div className="review-section">
                 <input type="number" placeholder="Rating (1-5)" value={rating} onChange={(e) => setRating(e.target.value)} />
                 <textarea placeholder="Write review" value={comment} onChange={(e) => setComment(e.target.value)} />
@@ -74,7 +109,7 @@ function MenuCard({ item, addToCart }) {
                         <div key={review.id}>
                             <h4>{review.username}</h4>
                             <p>⭐ {review.rating}</p>
-                            <p>{review.rating}</p>
+                            <p>{review.review}</p>
                             <p>{review.comment}</p>
                         </div>
                     ))
