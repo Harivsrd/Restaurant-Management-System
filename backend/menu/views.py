@@ -67,3 +67,25 @@ def favorite_items(request):
 
     return Response(serializer.data)
 
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+
+def add_review(request, item_id):
+    item = MenuItem.objects.get(id=item_id)
+    review = Review.objects.create(
+        user = request.user,
+        menu_item = item,
+        rating = request.data.get("rating"),
+        comment = request.data.get("comment")
+    )
+    serializer = ReviewSerializer(review)
+    
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def get_review(request, item_id):
+    item = MenuItem.objects.get(id=item_id)
+    reviews = item.reviews.all()
+    serializer = ReviewSerializer(reviews, many=True)
+    
+    return Response(serializer.data)
