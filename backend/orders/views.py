@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
 from django.db.models import Sum 
+from django.core.mail import send_mail 
 
 from reservations.models import Reservation
 
@@ -11,6 +12,7 @@ from .models import Order
 from .serializers import OrderSerializer
 
 from django.contrib.auth.models import User 
+from django.conf import settings 
 
 @api_view(['POST'])
 def create_order(request):
@@ -23,6 +25,11 @@ def create_order(request):
         user=user,
         total_price=total_price
     )
+    send_mail('Order Confirmation',
+              f"Your order #{order.id} has been placed succesfully.",
+              settings.EMAIL_HOST_USER,
+              [request.user.email],
+              fail_silently=True)
     serializer = OrderSerializer(order)
     
     return Response(serializer.data)

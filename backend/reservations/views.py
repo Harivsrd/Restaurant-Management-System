@@ -6,6 +6,8 @@ from .models import Reservation
 
 from .serializers import ReservationSerializer
 
+from django.core.mail import send_mail
+from django.conf import settings
 from django.contrib.auth.models import User 
 from datetime import date 
 
@@ -27,6 +29,29 @@ def create_reservation(request):
         reservation_date = reservation_date,
         reservation_time = request.data.get("reservation_time"),
         guests = guests
+    )
+    
+    send_mail(
+        'Reservation Confirmend',
+        f"""
+            Hello {request.user.username},
+
+            Your reservation is confirmed.
+
+            Date:
+            {reservation.reservation_date}
+
+            Time:
+            {reservation.reservation_time}
+
+            Guests:
+            {reservation.guests}
+
+            Thank you.
+            """,
+        settings.EMAIL_HOST_USER,
+        [request.user.email],
+        fail_silently=True
     )
     
     serializer = ReservationSerializer(reservation)
