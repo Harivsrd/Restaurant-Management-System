@@ -38,6 +38,13 @@ function OrderHistory() {
                             <p>
                                 Date:{" "}{new Date(order.created_at).toLocaleString()}
                             </p>
+                            <p>
+                                Status:{" "}<strong>
+                                    <span className={`status-badge ${order.status}`}>
+                                        {order.status}
+                                    </span>
+                                </strong>
+                            </p>
                         </div>
                     ))
                 )
