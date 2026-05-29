@@ -14,6 +14,8 @@ from .serializers import OrderSerializer
 from django.contrib.auth.models import User 
 from django.conf import settings 
 
+import razorpay
+
 @api_view(['POST'])
 def create_order(request):
     
@@ -59,3 +61,22 @@ def dashboard_stats(request):
     }
     
     return Response(data)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+
+def create_payment_order(request):
+    amount = int(float(request.data.get("amount"))*100)
+    client = razorpay.Client(
+        auth=(
+            settings.RAZORPAY_KEY_ID,
+            settings.RAZORPAY_KEY_SECRET
+        )
+    )
+    payment_order = client.order.create([
+        "amount": amount,
+        "currency": "INR",
+        "payment_capture": 1
+    ])
+    
+    return Response(payment_order)
