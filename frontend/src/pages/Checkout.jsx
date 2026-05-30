@@ -1,4 +1,5 @@
-import { toast } from "react-toastify";
+import { toast } from "react-toastify"
+import { Navigate } from "react-router-dom";
 import API from "../services/api";
 
 function Checkout({ cartItems, setCartItems }) {
@@ -41,6 +42,50 @@ function Checkout({ cartItems, setCartItems }) {
 
   };
 
+  const handlePayment = async () => {
+    const response = await API.post("orders/create-payment/",{
+      amount: totalPrice
+    });
+
+    const options = {
+      key : "rzp_test_SvHVh5vvELekxH",
+      amount: response.data.amount,
+      currency: response.data.currency,
+      order_id: response.data.id,
+      name: "Restaurant Management",
+      description: "Food Order",
+      handler: async function(response) {
+        try {
+
+            await API.post(
+              "orders/verify-payment/",
+              {
+                  razorpay_order_id:
+                    response.razorpay_order_id,
+
+                  razorpay_payment_id:
+                    response.razorpay_payment_id
+              }
+            );
+
+            toast.success(
+              "Payment Successful"
+            );
+            setCartItems([]);
+            <Navigate to="/orders" />
+
+        } catch(error) {
+
+            console.log(error);
+        }
+      }
+    }
+
+    const razor = new window.Razorpay(options);
+
+    razor.open();
+  }
+
   return (
 
     <div>
@@ -49,8 +94,8 @@ function Checkout({ cartItems, setCartItems }) {
 
       <h2>Total: ₹{totalPrice}</h2>
 
-      <button onClick={placeOrder}>
-        Place Order
+      <button onClick={handlePayment}>
+        Place Now
       </button>
 
     </div>

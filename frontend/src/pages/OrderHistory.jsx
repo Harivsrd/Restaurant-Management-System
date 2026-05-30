@@ -45,6 +45,7 @@ function OrderHistory() {
                                     </span>
                                 </strong>
                             </p>
+                        <p>{order.payment_status}</p>
                         </div>
                     ))
                 )
