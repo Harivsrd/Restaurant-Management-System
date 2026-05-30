@@ -17,9 +17,10 @@ from django.conf import settings
 import razorpay
 
 @api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def create_order(request):
     
-    user = User.objects.first() 
+    user = request.user
     
     total_price = request.data.get("total_price")
     
@@ -73,10 +74,34 @@ def create_payment_order(request):
             settings.RAZORPAY_KEY_SECRET
         )
     )
-    payment_order = client.order.create([
+    payment_order = client.order.create({
         "amount": amount,
         "currency": "INR",
         "payment_capture": 1
-    ])
-    
-    return Response(payment_order)
+    })
+    order = Order.objects.create(
+        user=request.user,
+        total_price=amount / 100,
+        razorpay_order_id=payment_order["id"]
+    )
+    return Response({
+        **payment_order,
+        "db_order_id": order.id
+    })
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def verify_payment(request):
+
+    razorpay_order_id = request.data.get(
+        "razorpay_order_id"
+    )
+    order = Order.objects.get(
+        razorpay_order_id=razorpay_order_id
+    )
+    order.payment_status = "PAID"
+    order.save()
+
+    return Response({
+        "message": "Payment verified"
+    })
